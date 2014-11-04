@@ -1,0 +1,25 @@
+//binary exp
+
+#include <stdio.h>
+
+int main()
+{
+    int x, n1, n, res = 1;
+    scanf("%d %d", &x, &n1);
+    if (n1 < 0)
+        n = - n1;
+    else
+        n = n1;
+    while (n)
+    {
+		if (n & 1)
+			res *= x;
+        x *= x;
+        n >>= 1;
+    }
+    double res1 = res;
+    if(n1 < 0)
+        res1 = 1.0 / res1;
+    printf("%0.5lf", res1);
+    return 0;
+}
