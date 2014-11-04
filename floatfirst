@@ -1,0 +1,35 @@
+//find sign, exponent and mantissa
+
+#include <stdio.h>
+
+void calculate(int bits)
+{
+    int sign = (bits >> 31) & 1;
+	int exp = (bits >> 23) & ((1 << 8) - 1);
+	int man = bits & ((1 << 23) - 1);
+	if (sign)
+        sign = -1;
+    else
+        sign = 1;
+	if ((exp == 0) && (man == 0))
+        printf("Zero");
+    else if ((exp == 255) && (man == 0))
+	{
+		if (sign == 1)
+            printf("+inf");
+		else
+            printf("-inf");
+	}
+	else if ((exp == 255) && (man != 0))
+          printf("not_a_number");
+	else
+        printf("%d * 2^%d * %f", sign, exp - 127, 1+((float)man)/(1 << 23));
+}
+
+int main()
+{
+    float n;
+    scanf("%f", &n);
+    calculate(*(int *)(& n));
+    return 0;
+}
