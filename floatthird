@@ -1,0 +1,44 @@
+//find sign, exponent and mantissa
+
+#include <stdio.h>
+
+void calculate()
+{
+    union
+	{
+		float flval;
+		struct
+		{
+			unsigned m : 23;
+			unsigned e : 8;
+			unsigned s : 1;
+		} bitfield;
+	} flnum;
+    scanf("%f", &flnum.flval);
+	int sign = flnum.bitfield.s;
+	int exp= flnum.bitfield.e;
+	int man = flnum.bitfield.m;
+   	if (sign)
+        sign = -1;
+    else
+        sign = 1;
+	if ((exp == 0) && (man == 0))
+        printf("Zero");
+    else if ((exp == 255) && (man == 0))
+	{
+		if (sign == 1)
+            printf("+inf");
+		else
+            printf("-inf");
+	}
+	else if ((exp == 255) && (man != 0))
+          printf("not_a_number");
+	else
+        printf("%d * 2^%d * %f", sign, exp - 127, 1+((float)man)/(1 << 23));
+}
+
+int main()
+{
+    calculate();
+    return 0;
+}
