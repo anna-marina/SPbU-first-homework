@@ -1,0 +1,38 @@
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+
+int * prefix_function (char * s)
+{
+	int n = strlen(s);
+	int pi [1000];
+	for (int i=1; i<n; i++)
+	{
+		int j = pi[i-1];
+		while (j > 0 && s[i] != s[j])
+			j = pi[j-1];
+		if (s[i] == s[j])  ++j;
+		pi[i] = j;
+	}
+	return pi;
+}
+
+int main()
+{
+	char s[500], s1[500];
+	scanf("%s %s", s, s1);
+	int n=strlen(s1);
+	int m=strlen(s);
+	s1[n]+='#';
+	for(int i=n+1; i<=n+m; i++)
+		s1[i]=s[i-1-n];
+	int rez=0;
+	int t [1000];
+   	for(int i=n+1; i<=n+m; i++)
+		t[i] = prefix_function (s1) [i];
+	for(int i=n+1; i<=n+m; i++)
+		if(t[i]==n)
+			rez++;
+	printf("%d", rez);
+	return 0;
+}
