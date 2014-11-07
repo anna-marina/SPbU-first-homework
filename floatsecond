@@ -34,7 +34,7 @@ int main()
 		int inval;
 	} flnum;
 
-	scanf("%f", &flnum.inval);
+	scanf("%f", &flnum.fval);
 	calculate(flnum.inval);
     return 0;
 }
