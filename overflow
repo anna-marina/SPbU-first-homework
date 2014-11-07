@@ -1,0 +1,23 @@
+//overflow
+#include <stdio.h>
+#include <string.h>
+
+void overflow(char str[])
+{
+	char buffer[4];
+	strcpy(buffer, str);
+}
+
+void f()
+{
+	printf("\nYOU HACKED!\n");
+}
+
+int main(void)
+{
+	char s[] = "aaaaaaaaaaaa"     
+		"\xe6\x10\x41\x00";     //It is return address of function f
+	printf("f: 0x%x\n", (int)(&f)); //Writes return address of function f (0x004110e6)
+	overflow(s);
+	return 0;
+}
