@@ -2,36 +2,45 @@
 #include <stdio.h>
 #include <string.h>
 
-int pi [1000];
-char s[500], s1[500];
-
-void prefix_function (char * s)
+void prefix_function (char * s, int *p)
 {
 	int n = strlen(s);
-	for (int i=1; i<n; i++)
+	for (int i=1; i < n; i++)
 	{
-		int j = pi[i - 1];
+		int j = p[i - 1];
 		while ((j > 0) && (s[i] != s[j]))
-			j = pi[j - 1];
+		{
+			j = p[j - 1];
+		}
 		if (s[i] == s[j])
-			++ j;
-		pi[i] = j;
+		{
+			++j;
+		}
+		p[i] = j;
 	}
 }
 
 int main()
 {
+    	int pi [1000]={};
+    	char s[500], s1[500];
 	scanf("%s %s", s, s1);
 	int n = strlen(s1);
 	int m = strlen(s);
-	s1[n] = '#';
+	s1[n] = 7;
 	for(int i = n + 1; i <= n + m; i ++)
+	{
 		s1[i]=s[i-1-n];
-    int rez = 0;
-    prefix_function (s1);
+	}
+	 int rez = 0;
+	 prefix_function (s1, pi);
 	for(int  i= n + 1; i <= n + m; i ++)
+	{
 		if (pi [i] == n)
+		{
 			rez ++;
+		}
+	}
 	printf("%d", rez);
 	return 0;
 }
