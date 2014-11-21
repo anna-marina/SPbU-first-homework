@@ -21,69 +21,51 @@ void push(Node **head, int data)
     (*head) = tmp;
 }
 
-int pop(Node **head)
+void deleteNth (Node **head, int data)
 {
-    Node* prev = NULL;
-    int val;
-    if (head == NULL)
-    {
-        exit(-1);
-    }
-    prev = (*head);
-    val = prev->value;
-    (*head) = (*head)->next;
-    free(prev);
-    return val;
-}
-
-
-Node* getNth(Node* head, int n)
-{
-    int counter = 0;
-    while (counter < n && head)
-    {
-        head = head->next;
-        counter++;
-    }
-    return head;
-}
-
-int deleteNth(Node **head, int n)
-{
-    if (n == 0)
-    {
-        return pop(head);
-    } else
-    {
-        Node *prev = getNth(*head, n-1);
-        Node *elm  = prev->next;
-        int val = elm->value;
-
-        prev->next = elm->next;
-        free(elm);
-        return val;
-    }
+	Node *temp = *head;
+	Node *prev = NULL;
+	int ok = 0;
+	while (temp != NULL)
+	{
+		if (temp->value == data)
+		{
+			if (temp == *head) *head = (*head)->next;
+			else prev->next = temp->next;
+			ok = 1;
+			break;
+		}
+		prev = temp;
+		temp = temp->next;
+		if (ok) break;
+	}
+	free(temp);
+	return;
 }
 
 void printLinkedList(const Node *head)
  {
     while (head)
     {
-        printf("%d, ", head->value);
+        printf("%d", head->value);
         head = head->next;
+        if(head)
+            printf(", ");
     }
     printf("\n");
 }
 
 
 void deleteList(Node **head)
- {
-    while ((*head)->next)
-    {
-        pop(head);
-        *head = (*head)->next;
-    }
-    free(*head);
+{
+	Node *temp = *head;
+	while (temp != NULL)
+	{
+		*head = (*head)->next;
+		free(temp);
+		temp = *head;
+	}
+	return;
 }
 
 int main()
@@ -117,4 +99,3 @@ int main()
     }
     return 0;
 }
-
